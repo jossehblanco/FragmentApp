@@ -40,18 +40,21 @@ public class FragmentList extends ListFragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //Toast.makeText(getActivity(), "Item: " + adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
+        Planet planet = new Planet(
+                getResources().getIdentifier((adapterView.getItemAtPosition(i).toString().toLowerCase()), "drawable","com.example.rafaj.fragmentapp"),
+                adapterView.getItemAtPosition(i).toString(),
+                getResources().getIdentifier((adapterView.getItemAtPosition(i).toString()), "string","com.example.rafaj.fragmentapp"));
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             Intent newIntent = new Intent(getActivity().getApplicationContext(), Main2Activity.class);
-            newIntent.setAction(Intent.ACTION_SEND);
-            newIntent.setType("text/plain");
-            newIntent.putExtra(Intent.EXTRA_TEXT, adapterView.getItemAtPosition(i).toString());
+            newIntent.putExtra("Holi", planet);
             startActivity(newIntent);
         }else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-            Toast.makeText(getActivity(), "Item: " + adapterView.getItemAtPosition(i).toString(), Toast.LENGTH_SHORT).show();
 
             Bundle bundle = new Bundle();
             bundle.putString("KEY", adapterView.getItemAtPosition(i).toString());
+            bundle.putInt("imgRes", planet.imageRes);
+            bundle.putInt("info", planet.planetInfo);
             FragmentViewer frag = new FragmentViewer();
             frag.setArguments(bundle);
 
